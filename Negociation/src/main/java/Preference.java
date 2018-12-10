@@ -1,12 +1,17 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Preference {
-    double budget = 0;
-    Date dateVenteMax;
-    Date dateVenteMin;
+    private double budget;
+    private ArrayList<Compagnie> compagnies;
+    private Date dateVenteMax;
+    private Date dateVenteMin;
+    private double prixDepNeg;
+    
 
-    public Preference(double budget, Date dateVenteMax, Date dateVenteMin) {
+    public Preference(double budget, ArrayList<Compagnie> compagnies, Date dateVenteMax, Date dateVenteMin) {
         this.budget = budget;
+        this.compagnies = compagnies;
         this.dateVenteMax = dateVenteMax;
         this.dateVenteMin = dateVenteMin;
     }
@@ -33,5 +38,13 @@ public class Preference {
 
     public void setDateVenteMin(Date dateVenteMin) {
         this.dateVenteMin = dateVenteMin;
+    }
+
+    public ArrayList<Compagnie> getCompagnies() {
+        return compagnies;
+    }
+
+    public void setCompagnies(ArrayList<Compagnie> compagnies) {
+        this.compagnies = compagnies;
     }
 }
