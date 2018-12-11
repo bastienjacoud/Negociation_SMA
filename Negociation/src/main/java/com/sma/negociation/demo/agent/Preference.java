@@ -1,3 +1,7 @@
+package com.sma.negociation.demo.agent;
+
+import com.sma.negociation.demo.compagnies.Compagnie;
+
 import java.util.ArrayList;
 import java.util.Date;
 

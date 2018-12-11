@@ -1,3 +1,5 @@
+package com.sma.negociation.demo.agent;
+
 public abstract class Agent implements Runnable{
 
 

@@ -1,5 +1,7 @@
 package com.sma.negociation.demo.messagerie;
 
+import com.sma.negociation.demo.agent.Agent;
+
 public class Message {
 
     /**

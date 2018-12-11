@@ -1,3 +1,5 @@
+package com.sma.negociation.demo.compagnies;
+
 public enum Compagnie {
     AIR_FRANCE,
     BRUSSELS_AIRLINE,
