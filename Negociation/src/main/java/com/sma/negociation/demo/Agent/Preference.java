@@ -1,3 +1,5 @@
+package com.sma.negociation.demo.Agent;
+
 import java.util.ArrayList;
 import java.util.Date;
 

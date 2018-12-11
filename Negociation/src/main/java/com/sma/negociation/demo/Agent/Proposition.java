@@ -1,3 +1,5 @@
+package com.sma.negociation.demo.Agent;
+
 public class Proposition {
     private double montant_prop;
 
