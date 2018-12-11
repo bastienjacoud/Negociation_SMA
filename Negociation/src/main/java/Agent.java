@@ -1,6 +1,4 @@
 public abstract class Agent implements Runnable{
-
-
     Preference preference;
 
     public Agent() {
