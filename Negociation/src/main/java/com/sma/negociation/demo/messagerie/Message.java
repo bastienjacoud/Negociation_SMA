@@ -1,6 +1,7 @@
 package com.sma.negociation.demo.messagerie;
 
 import com.sma.negociation.demo.agent.Agent;
+import com.sma.negociation.demo.agent.Proposition;
 
 public class Message {
 

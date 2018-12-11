@@ -9,7 +9,7 @@ public class Messagerie {
 
     public static List<Message> getMessages(int idAgent){
         return messages.stream()
-                .filter(m->m.getEmetteur().getId())
+                .filter(m->m.getEmetteur().getId() == idAgent)
                 .collect(Collectors.toList());
     }
 
