@@ -3,6 +3,8 @@ package com.sma.negociation.demo.agent;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.sma.negociation.demo.compagnies.Compagnie;
+
 public class Preference {
     private double budget;
     private ArrayList<Compagnie> compagnies;
