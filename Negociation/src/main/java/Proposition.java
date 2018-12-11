@@ -1,5 +1,3 @@
-package com.sma.negociation.demo;
-
 public class Proposition {
     private double montant_prop;
 
