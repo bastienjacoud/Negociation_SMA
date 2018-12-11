@@ -7,13 +7,13 @@ public class Preference {
     private Date dateVenteMax;
     private Date dateVenteMin;
     private double prixDepNeg;
-    
+
 
     public Preference(double budget, ArrayList<Compagnie> compagnies, Date dateVenteMax, Date dateVenteMin) {
-        this.budget = budget;
-        this.compagnies = compagnies;
-        this.dateVenteMax = dateVenteMax;
-        this.dateVenteMin = dateVenteMin;
+        this.setBudget(budget);
+        this.setCompagnies(compagnies);
+        this.setDateVenteMax(dateVenteMax);
+        this.setDateVenteMin(dateVenteMin);
     }
 
     public double getBudget() {
@@ -46,5 +46,13 @@ public class Preference {
 
     public void setCompagnies(ArrayList<Compagnie> compagnies) {
         this.compagnies = compagnies;
+    }
+
+    public double getPrixDepNeg() {
+        return prixDepNeg;
+    }
+
+    public void setPrixDepNeg(double prixDepNeg) {
+        this.prixDepNeg = prixDepNeg;
     }
 }
