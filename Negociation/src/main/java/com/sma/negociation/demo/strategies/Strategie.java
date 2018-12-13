@@ -5,10 +5,10 @@ import com.sma.negociation.demo.agent.Proposition;
 
 public abstract class Strategie {
 	
-	protected double valeurDepart;
+	protected Preference preferenceAgent;
 	
-	public Strategie(double pValeurDepart) {
-		valeurDepart = pValeurDepart;
+	public Strategie(Preference pPreferenceAgent) {
+		preferenceAgent = pPreferenceAgent;
 	}
 
 	/**

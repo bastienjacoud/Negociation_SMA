@@ -4,12 +4,11 @@ import com.sma.negociation.demo.agent.Preference;
 import com.sma.negociation.demo.agent.Proposition;
 
 public class StrategieNaiveNego extends StrategieNegociateur {
-
-	public StrategieNaiveNego(double pValeurDepart) {
-		super(pValeurDepart);
-		TAUXMAXAUGMENTATION = 0.15;
-	}
 	
+	public StrategieNaiveNego(Preference pPreferenceAgent) {
+		super(pPreferenceAgent);
+	}
+
 	@Override
 	protected Proposition contreProposition(Preference preference, Proposition propositionPartieAdverse, 
 			Proposition anciennePropositionAdverse) {
