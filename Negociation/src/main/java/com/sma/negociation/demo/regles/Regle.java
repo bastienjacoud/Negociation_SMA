@@ -9,7 +9,7 @@ public class Regle {
      */
 
     private static long tempsNegociation = 500;
-    private static RegleProtocole1 regleProtocole = RegleProtocole1.NONE;
+    private static RegleProtocole regleProtocole = new NoRules();
     private static int nbPropositionMax = 5;
 
     /**
@@ -26,11 +26,11 @@ public class Regle {
         Regle.tempsNegociation = tempsNegociation;
     }
 
-    public static RegleProtocole1 getRegleProtocole() {
+    public static RegleProtocole getRegleProtocole() {
         return regleProtocole;
     }
 
-    public static void setRegleProtocole(RegleProtocole1 regleProtocole) {
+    public static void setRegleProtocole(RegleProtocole regleProtocole) {
         Regle.regleProtocole = regleProtocole;
     }
 
