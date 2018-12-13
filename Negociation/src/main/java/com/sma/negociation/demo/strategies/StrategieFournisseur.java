@@ -1,13 +1,13 @@
 package com.sma.negociation.demo.strategies;
 
+import com.sma.negociation.demo.agent.Preference;
+
 public abstract class StrategieFournisseur extends Strategie {
 	
-	protected int nbPropositions;
 	protected static double TAUXMAXDIMINUTION = 0;
 	
-
-    public StrategieFournisseur(double pValeurDepart, int pNbPropositions) {
-       super(pValeurDepart);
-       this.nbPropositions = pNbPropositions;
-    }
+	public StrategieFournisseur(Preference pPreferenceAgent) {
+		super(pPreferenceAgent);
+	}
+	
 }

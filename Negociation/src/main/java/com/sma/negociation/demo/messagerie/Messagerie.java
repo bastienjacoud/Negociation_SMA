@@ -1,5 +1,7 @@
 package com.sma.negociation.demo.messagerie;
 
+import com.sma.negociation.demo.agent.Proposition;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,5 +37,15 @@ public class Messagerie {
      */
     public static void deleteMessage(Message message){
         messages.remove(message);
+    }
+
+    public static Proposition getAncienneProposition(int id_emetteur, int id_recepteur){
+        List<Message> messages = Messagerie.getMessages(id_recepteur).
+                stream()
+                .filter(m -> m.getEmetteur().getId() == id_emetteur)
+                .collect(Collectors.toList());
+        if(messages.size() >= 2) {
+            return messages.get(messages.size() - 2).getProposition();
+        }return null;
     }
 }
