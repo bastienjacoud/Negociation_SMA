@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class AgentNegociateur extends Agent {
+    private volatile boolean exit = false;
     private StrategieNegociateur strategieNegociateur;
 
     public AgentNegociateur(StrategieNegociateur strategieNegociateur) {
@@ -26,23 +27,24 @@ public class AgentNegociateur extends Agent {
 
     @Override
     public void run() {
-
         long temps_dep_neg = System.currentTimeMillis();
 
         // while condition d'arr
-        while (Messagerie.getMessages(this.getId()).size() > 0 ) {
-            boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
-            Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size()-1);
-            this.strategieNegociateur.reflexion(message_recu.getProposition(),Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(),this.getId()),isNegTimeUp);
-
-
-
-
-            //calculer la diff de temps avt l'envoi du message pour savoir si on stoppe
+        while (exit) {
+            if (Messagerie.getMessages(this.getId()).size() > 0) {
+                boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
+                Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
+                Proposition nouvelleProposition = this.strategieNegociateur.reflexion(message_recu.getProposition(), Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), isNegTimeUp);
+               // Messagerie.addMessage(new Message(T));
+            }
         }
     }
 
-    private boolean isNegTimeUp(long temps_dep_neg){
-        return  (TimeUnit.MILLISECONDS.toMinutes(temps_dep_neg - System.currentTimeMillis() )  > 3) ;
+    public void stopAgent() {
+        exit = true;
+    }
+
+    private boolean isNegTimeUp(long temps_dep_neg) {
+        return (TimeUnit.MILLISECONDS.toMinutes(temps_dep_neg - System.currentTimeMillis()) > 3);
     }
 }

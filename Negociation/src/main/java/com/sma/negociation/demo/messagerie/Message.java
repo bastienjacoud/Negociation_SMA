@@ -10,7 +10,7 @@ public class Message {
      * ATTRIBUTS
      *
      */
-
+    private static int compteurId = 0;
     private int idMessage;
     private TypeMessage typeMessage;
     private Agent recepteur;
@@ -78,12 +78,12 @@ public class Message {
      *
      */
 
-    public Message(int idMessage, TypeMessage typeMessage, Agent recepteur, Agent emetteur, Proposition proposition) {
+    public Message(TypeMessage typeMessage, Agent recepteur, Agent emetteur, Proposition proposition) {
         this.typeMessage = typeMessage;
         this.recepteur = recepteur;
         this.emetteur = emetteur;
         this.proposition = proposition;
-        this.idMessage = idMessage;
+        this.idMessage = compteurId++;
     }
 
 
