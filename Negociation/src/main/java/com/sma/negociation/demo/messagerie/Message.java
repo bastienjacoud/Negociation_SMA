@@ -11,6 +11,7 @@ public class Message {
      *
      */
 
+    private int idMessage;
     private TypeMessage typeMessage;
     private Agent recepteur;
     private Agent emetteur;
@@ -63,17 +64,26 @@ public class Message {
         this.traite = traite;
     }
 
+    public int getIdMessage() {
+        return idMessage;
+    }
+
+    public void setIdMessage(int idMessage) {
+        this.idMessage = idMessage;
+    }
+
     /**
      *
      * CONSTRUCTOR
      *
      */
 
-    public Message(TypeMessage typeMessage, Agent recepteur, Agent emetteur, Proposition proposition) {
+    public Message(int idMessage, TypeMessage typeMessage, Agent recepteur, Agent emetteur, Proposition proposition) {
         this.typeMessage = typeMessage;
         this.recepteur = recepteur;
         this.emetteur = emetteur;
         this.proposition = proposition;
+        this.idMessage = idMessage;
     }
 
 
