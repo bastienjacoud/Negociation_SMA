@@ -1,5 +1,6 @@
 package com.sma.negociation.demo;
 
+import com.sma.negociation.demo.logger.MyLogger;
 import com.sma.negociation.demo.regles.Concession;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication {
 
     public static void main(String[] args) {
-        Concession c = new Concession();
-        System.out.println(c.getSomme());
+        MyLogger.logInfo("ça fonctionne");
+        MyLogger.logError("Il y a une erreur");
+        MyLogger.logWarning("Avertissement !!!");
     }
 }
