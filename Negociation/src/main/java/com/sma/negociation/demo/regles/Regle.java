@@ -41,4 +41,12 @@ public class Regle {
     public static void setNbPropositionMax(int nbPropositionMax) {
         Regle.nbPropositionMax = nbPropositionMax;
     }
+
+    public static double getSeuil(){
+        return regleProtocole.seuil;
+    }
+
+    public static int getRatio(){
+        return regleProtocole.ratio;
+    }
 }
