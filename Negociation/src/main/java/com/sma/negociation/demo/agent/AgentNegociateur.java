@@ -1,6 +1,12 @@
 package com.sma.negociation.demo.agent;
 
+import com.sma.negociation.demo.messagerie.Message;
+import com.sma.negociation.demo.messagerie.Messagerie;
 import com.sma.negociation.demo.strategies.StrategieNegociateur;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class AgentNegociateur extends Agent {
     private StrategieNegociateur strategieNegociateur;
@@ -20,13 +26,23 @@ public class AgentNegociateur extends Agent {
 
     @Override
     public void run() {
-        long temps_dep_neg = System.currentTimeMillis();
-        long temps_courant = 0;
-        // while condition d'arr
-        while (true) {
-            //calculer la diff de temps avt l'envoi du message pour savoir si on stoppe
-            temps_courant = System.currentTimeMillis();
-        }
 
+        long temps_dep_neg = System.currentTimeMillis();
+
+        // while condition d'arr
+        while (Messagerie.getMessages(this.getId()).size() > 0 ) {
+            boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
+            Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size()-1);
+            this.strategieNegociateur.reflexion(message_recu.getProposition(),Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(),this.getId()),isNegTimeUp);
+
+
+
+
+            //calculer la diff de temps avt l'envoi du message pour savoir si on stoppe
+        }
+    }
+
+    private boolean isNegTimeUp(long temps_dep_neg){
+        return  (TimeUnit.MILLISECONDS.toMinutes(temps_dep_neg - System.currentTimeMillis() )  > 3) ;
     }
 }
