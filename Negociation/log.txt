@@ -1,0 +1,6 @@
+janv. 21, 2019 4:23:02 PM com.sma.negociation.demo.logger.FileLogger logInfo
+INFOS: ça fonctionne
+janv. 21, 2019 4:23:02 PM com.sma.negociation.demo.logger.FileLogger logError
+GRAVE: Il y a une erreur
+janv. 21, 2019 4:23:02 PM com.sma.negociation.demo.logger.FileLogger logWarning
+AVERTISSEMENT: Avertissement !!!
