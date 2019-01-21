@@ -12,22 +12,26 @@ public class StrategieNaiveNego extends StrategieNegociateur {
 	@Override
 	protected Proposition contreProposition(Proposition propositionPartieAdverse, 
 			Proposition anciennePropositionAdverse) {
-		// TODO Auto-generated method stub
-		return null;
+		// Si l'augmentation du fournisseur est faible
+		if((propositionPartieAdverse.getMontant_prop() * anciennePropositionAdverse.getMontant_prop())/propositionPartieAdverse.getMontant_prop() < TAUXMAXAUGMENTATION) {
+			return propositionPartieAdverse;
+		}
+		return new Proposition(preferenceAgent.getPrixDepNeg());
 	}
 
 	@Override
 	protected boolean accepter(Proposition propositionPartieAdverse, 
 			Proposition anciennePropositionAdverse, boolean estTermine) {
-		// TODO Auto-generated method stub
-		return false;
+		if(propositionPartieAdverse.getMontant_prop() > this.preferenceAgent.getBudget())
+			return false;
+		else
+			return true;
 	}
 
 	@Override
 	protected boolean refuser(Proposition propositionPartieAdverse, 
 			Proposition anciennePropositionAdverse, boolean estTermine) {
-		// TODO Auto-generated method stub
-		return false;
+		return !accepter(propositionPartieAdverse, anciennePropositionAdverse, estTermine);
 	}
 
 }
