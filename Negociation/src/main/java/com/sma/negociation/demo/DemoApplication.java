@@ -21,8 +21,8 @@ public class DemoApplication {
         	Preference prefNego = new Preference(800.0, null, null, null, 500.0);
         	Preference prefFour = new Preference(1000.0, null, null, null, 1200.0);
         	
-        	AgentFournisseur fournisseur = new AgentFournisseur(new StrategieNaiveFour(prefFour));
-        	AgentNegociateur negociateur = new AgentNegociateur(new StrategieNaiveNego(prefNego));
+        	AgentFournisseur fournisseur = new AgentFournisseur(prefFour, new StrategieNaiveFour());
+        	AgentNegociateur negociateur = new AgentNegociateur(prefNego, new StrategieNaiveNego());
         	
         	fournisseur.run();
         	negociateur.run();

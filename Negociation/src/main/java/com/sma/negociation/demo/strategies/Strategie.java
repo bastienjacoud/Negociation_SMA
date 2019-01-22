@@ -6,10 +6,6 @@ import com.sma.negociation.demo.agent.Proposition;
 public abstract class Strategie {
 	
 	protected Preference preferenceAgent;
-	
-	public Strategie(Preference pPreferenceAgent) {
-		preferenceAgent = pPreferenceAgent;
-	}
 
 	/**
 	 * Nouvelle proposition d'un prix
@@ -64,5 +60,13 @@ public abstract class Strategie {
     	} else {
     		return contreProposition(propositionPartieAdverse, anciennePropositionAdverse);
     	}
+    }
+    
+    public void setPreferenceAgent(Preference pPreference) {
+    	preferenceAgent = pPreference;
+    }
+    
+    public Preference getPreferenceAgent() {
+    	return preferenceAgent;
     }
 }

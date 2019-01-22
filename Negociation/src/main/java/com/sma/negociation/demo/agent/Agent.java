@@ -15,10 +15,11 @@ public abstract class Agent implements Runnable {
     private int id;
     private static int compteur_id = 0;
 
-    public Agent() {
+    public Agent(Preference pPreferenceAgent) {
         this.id = compteur_id++;
         thread = new Thread(this);
         thread.start();
+        preference = pPreferenceAgent;
     }
 
     @Override

@@ -14,8 +14,8 @@ public class AgentFournisseur extends Agent {
     public StrategieFournisseur strategieFournisseur;
     public static ArrayList<AgentFournisseur> agentFournisseurs = new ArrayList<>();
 
-    public AgentFournisseur(StrategieFournisseur strategieFournisseur) {
-        super();
+    public AgentFournisseur(Preference preference, StrategieFournisseur strategieFournisseur) {
+        super(preference);
         this.strategieFournisseur = strategieFournisseur;
         agentFournisseurs.add(this);
     }

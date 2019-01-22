@@ -14,8 +14,8 @@ public class AgentNegociateur extends Agent {
     private volatile boolean exit = false;
     private StrategieNegociateur strategieNegociateur;
 
-    public AgentNegociateur(StrategieNegociateur strategieNegociateur) {
-        super();
+    public AgentNegociateur(Preference preference, StrategieNegociateur strategieNegociateur) {
+        super(preference);
         this.strategieNegociateur = strategieNegociateur;
     }
 

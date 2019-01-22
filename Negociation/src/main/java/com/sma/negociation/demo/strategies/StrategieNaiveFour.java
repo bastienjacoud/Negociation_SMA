@@ -4,10 +4,6 @@ import com.sma.negociation.demo.agent.Preference;
 import com.sma.negociation.demo.agent.Proposition;
 
 public class StrategieNaiveFour extends StrategieFournisseur {
-	
-	public StrategieNaiveFour(Preference pPreferenceAgent) {
-		super(pPreferenceAgent);
-	}
 
 	@Override
 	protected Proposition contreProposition(Proposition propositionPartieAdverse, 
