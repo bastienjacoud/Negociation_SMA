@@ -2,6 +2,7 @@ package com.sma.negociation.demo.agent;
 
 import com.sma.negociation.demo.messagerie.Message;
 import com.sma.negociation.demo.messagerie.Messagerie;
+import com.sma.negociation.demo.messagerie.TypeMessage;
 import com.sma.negociation.demo.strategies.StrategieNegociateur;
 
 import java.util.List;
@@ -28,14 +29,19 @@ public class AgentNegociateur extends Agent {
     @Override
     public void run() {
         long temps_dep_neg = System.currentTimeMillis();
+        //initier une negotiation
+
 
         // while condition d'arr
-        while (exit) {
+        while (!exit) {
             if (Messagerie.getMessages(this.getId()).size() > 0) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
                 Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
                 Proposition nouvelleProposition = this.strategieNegociateur.reflexion(message_recu.getProposition(), Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), isNegTimeUp);
-               // Messagerie.addMessage(new Message(T));
+                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent();
+                else {
+                    Messagerie.addMessage(new Message(TypeMessage.CONTRE_PROPOSITION, message_recu.getEmetteur(), this, nouvelleProposition));
+                }
             }
         }
     }
