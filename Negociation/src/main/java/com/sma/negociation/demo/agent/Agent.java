@@ -2,6 +2,7 @@ package com.sma.negociation.demo.agent;
 
 public abstract class Agent implements Runnable {
     Preference preference;
+    protected Thread thread;
 
     public int getId() {
         return id;
@@ -16,6 +17,8 @@ public abstract class Agent implements Runnable {
 
     public Agent() {
         this.id = compteur_id++;
+        thread = new Thread(this);
+        thread.start();
     }
 
     @Override

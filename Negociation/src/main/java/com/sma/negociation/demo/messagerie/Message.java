@@ -86,6 +86,14 @@ public class Message {
         this.idMessage = compteurId++;
     }
 
+    @Override
+    public String toString() {
+        return "[MSG " + this.idMessage +
+                "]: Emetteur : " + getEmetteur().getId() +
+                " Recepteur :" + getRecepteur().getId() +
+                " Proposition :" + getProposition().getMontant_prop() +
+                " TypeMessage :" + getTypeMessage().toString();
+    }
 
     /**
      *
