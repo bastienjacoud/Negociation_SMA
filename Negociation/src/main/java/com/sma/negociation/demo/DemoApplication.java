@@ -5,6 +5,12 @@ import com.sma.negociation.demo.agent.AgentNegociateur;
 import com.sma.negociation.demo.agent.Preference;
 import com.sma.negociation.demo.logger.MyLogger;
 import com.sma.negociation.demo.regles.Concession;
+import com.sma.negociation.demo.strategies.StrategieNaiveFour;
+import com.sma.negociation.demo.strategies.StrategieNaiveNego;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,12 +21,12 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         switch(modeInteraction) {
-        case SIMPLE: 
-        	AgentFournisseur fournisseur = new AgentFournisseur(null);
-        	AgentNegociateur negociateur = new AgentNegociateur(null);
-        	
+        case SIMPLE:       	
         	Preference prefNego = new Preference(500.0, null, null, null);
         	Preference prefFour = new Preference(1000.0, null, null, null);
+        	
+        	AgentFournisseur fournisseur = new AgentFournisseur(new StrategieNaiveFour(prefFour));
+        	AgentNegociateur negociateur = new AgentNegociateur(new StrategieNaiveNego(prefNego));
         	
         	fournisseur.run();
         	negociateur.run();
