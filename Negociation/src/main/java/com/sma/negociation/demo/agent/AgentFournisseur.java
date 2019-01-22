@@ -27,6 +27,8 @@ public class AgentFournisseur extends Agent {
         long temps_dep_neg = System.currentTimeMillis();
         // while condition d'arr
         while (!exit) {
+            MyLogger.logInfo("Démarrage fournisseur" + getId());
+
             if (Messagerie.getMessages(this.getId()).size() > 0) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
                 Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
