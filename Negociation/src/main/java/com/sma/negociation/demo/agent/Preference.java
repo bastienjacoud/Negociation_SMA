@@ -13,11 +13,12 @@ public class Preference {
     private double prixDepNeg;
 
 
-    public Preference(double budget, ArrayList<Compagnie> compagnies, Date dateVenteMax, Date dateVenteMin) {
+    public Preference(double budget, ArrayList<Compagnie> compagnies, Date dateVenteMax, Date dateVenteMin, double prixDepNeg) {
         this.setBudget(budget);
         this.setCompagnies(compagnies);
         this.setDateVenteMax(dateVenteMax);
         this.setDateVenteMin(dateVenteMin);
+        this.setPrixDepNeg(prixDepNeg);
     }
 
     public double getBudget() {
