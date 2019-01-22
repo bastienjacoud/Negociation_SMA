@@ -17,6 +17,7 @@ public class AgentNegociateur extends Agent {
     public AgentNegociateur(StrategieNegociateur strategieNegociateur) {
         super();
         this.strategieNegociateur = strategieNegociateur;
+        preference = new Preference()
     }
 
     public StrategieNegociateur getStrategieNegociateur() {
@@ -31,11 +32,15 @@ public class AgentNegociateur extends Agent {
     public void run() {
         long temps_dep_neg = System.currentTimeMillis();
         //initier une negotiation
-        MyLogger.logInfo("hello negociateur");
-
+        MyLogger.logInfo("hello negociateur" + getId());
+        System.out.println(preference);
+        Proposition propositionDepart = new Proposition(preference.getPrixDepNeg());
+        Messagerie.addMessage(new Message(TypeMessage.REQUETE, AgentFournisseur.agentFournisseurs.get(0), this, propositionDepart));
 
         // while condition d'arr
         while (!exit) {
+            MyLogger.logInfo("Démarrage négociateur " + getId());
+
             if (Messagerie.getMessages(this.getId()).size() > 0) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
                 Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
