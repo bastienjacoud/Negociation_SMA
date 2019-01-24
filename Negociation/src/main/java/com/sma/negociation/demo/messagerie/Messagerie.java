@@ -19,7 +19,7 @@ public class Messagerie {
      */
     public static List<Message> getMessages(int idAgent){
         return messages.stream()
-                .filter(m->(m.getEmetteur().getId() == idAgent && !m.isTraite()))
+                .filter(m->(m.getRecepteur().getId() == idAgent && !m.isTraite()))
                 .collect(Collectors.toList());
     }
 

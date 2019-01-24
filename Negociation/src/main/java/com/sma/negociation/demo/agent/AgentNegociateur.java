@@ -40,7 +40,7 @@ public class AgentNegociateur extends Agent {
         while (!exit) {
             MyLogger.logInfo("Démarrage négociateur " + getId());
 
-            if (Messagerie.getMessages(this.getId()).size() > 0) {
+            if (!Messagerie.getMessages(this.getId()).isEmpty()) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
                 Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
                 MyLogger.logInfo(message_recu.toString());
