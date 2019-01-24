@@ -14,4 +14,8 @@ public class Proposition {
     public void setMontant_prop(double montant_prop) {
         this.montant_prop = montant_prop;
     }
+    
+    public String toString() {
+    	return "Montant : " + montant_prop;
+    }
 }

@@ -17,7 +17,7 @@ public class Messagerie {
      * @param idAgent
      * @return Liste de messages de l'agent.
      */
-    public static List<Message> getMessages(int idAgent){
+    public static synchronized List<Message> getMessages(int idAgent){
         return messages.stream()
                 .filter(m->(m.getRecepteur().getId() == idAgent && !m.isTraite()))
                 .collect(Collectors.toList());

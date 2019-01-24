@@ -17,6 +17,7 @@ public class AgentNegociateur extends Agent {
     public AgentNegociateur(Preference preference, StrategieNegociateur strategieNegociateur) {
         super(preference);
         this.strategieNegociateur = strategieNegociateur;
+        this.strategieNegociateur.setPreferenceAgent(preference);
     }
 
     public StrategieNegociateur getStrategieNegociateur() {
@@ -31,19 +32,26 @@ public class AgentNegociateur extends Agent {
     public void run() {
         long temps_dep_neg = System.currentTimeMillis();
         //initier une negotiation
-        MyLogger.logInfo("hello negociateur" + getId());
-        System.out.println(preference);
+        MyLogger.logInfo("Négociateur (Agent n°" + getId() + ")  actif");
         Proposition propositionDepart = new Proposition(preference.getPrixDepNeg());
         Messagerie.addMessage(new Message(TypeMessage.REQUETE, AgentFournisseur.agentFournisseurs.get(0), this, propositionDepart));
 
         // while condition d'arr
         while (!exit) {
-            MyLogger.logInfo("Démarrage négociateur " + getId());
-
             if (!Messagerie.getMessages(this.getId()).isEmpty()) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
                 Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
                 MyLogger.logInfo(message_recu.toString());
+                if(message_recu.getTypeMessage() == TypeMessage.ACK) {
+                	stopAgent();
+                	MyLogger.logWarning("Négociateur (Agent n°" + getId() + ")  terminé");
+                	
+                	// Négociation réussi
+                	if(message_recu.getProposition() != null) {
+                		MyLogger.logInfo("[RESULTAT] Négociation réussi : " + message_recu.getProposition());
+                	}
+                	return;
+                }
                 Proposition nouvelleProposition = this.strategieNegociateur.reflexion(message_recu.getProposition(), Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), isNegTimeUp);
                 if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent();
                 else {

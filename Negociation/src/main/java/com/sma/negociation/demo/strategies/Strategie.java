@@ -1,11 +1,14 @@
 package com.sma.negociation.demo.strategies;
 
+import java.util.Random;
+
 import com.sma.negociation.demo.agent.Preference;
 import com.sma.negociation.demo.agent.Proposition;
 
 public abstract class Strategie {
 	
 	protected Preference preferenceAgent;
+	protected Random alea;
 
 	/**
 	 * Nouvelle proposition d'un prix

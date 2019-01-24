@@ -17,24 +17,24 @@ public class AgentFournisseur extends Agent {
     public AgentFournisseur(Preference preference, StrategieFournisseur strategieFournisseur) {
         super(preference);
         this.strategieFournisseur = strategieFournisseur;
+        this.strategieFournisseur.setPreferenceAgent(preference);
         agentFournisseurs.add(this);
     }
 
     @Override
     public void run() {
-        MyLogger.logInfo("hello fournisseur" + getId());
+        MyLogger.logInfo("Fournisseur (Agent n°" + getId() + ")  actif");
 
         long temps_dep_neg = System.currentTimeMillis();
         // while condition d'arr
         while (!exit) {
-            MyLogger.logInfo("Démarrage fournisseur" + getId());
 
-            if (Messagerie.getMessages(this.getId()).size() > 0) {
+            if (!Messagerie.getMessages(this.getId()).isEmpty()) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
                 Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
                 MyLogger.logInfo(message_recu.toString());
                 Proposition nouvelleProposition = this.strategieFournisseur.reflexion(message_recu.getProposition(), Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), isNegTimeUp);
-                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent();
+                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent(message_recu.getEmetteur(), message_recu.getProposition());
                 else {
                     Messagerie.addMessage(new Message(TypeMessage.CONTRE_PROPOSITION, message_recu.getEmetteur(), this, nouvelleProposition));
                 }
@@ -42,7 +42,8 @@ public class AgentFournisseur extends Agent {
         }
     }
 
-    public void stopAgent() {
+    public void stopAgent(Agent agentEmetteur, Proposition proposition) {
+    	Messagerie.addMessage(new Message(TypeMessage.ACK, agentEmetteur, this, proposition));
         exit = true;
     }
 

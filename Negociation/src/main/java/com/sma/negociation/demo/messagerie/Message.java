@@ -91,7 +91,7 @@ public class Message {
         return "[MSG " + this.idMessage +
                 "]: Emetteur : " + getEmetteur().getId() +
                 " Recepteur :" + getRecepteur().getId() +
-                " Proposition :" + getProposition().getMontant_prop() +
+                " Proposition :" + (getProposition() != null ? getProposition().getMontant_prop() : "?") +
                 " TypeMessage :" + getTypeMessage().toString();
     }
 
