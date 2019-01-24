@@ -17,7 +17,6 @@ public class AgentNegociateur extends Agent {
     public AgentNegociateur(Preference preference, StrategieNegociateur strategieNegociateur) {
         super(preference);
         this.strategieNegociateur = strategieNegociateur;
-        preference = new Preference()
     }
 
     public StrategieNegociateur getStrategieNegociateur() {
