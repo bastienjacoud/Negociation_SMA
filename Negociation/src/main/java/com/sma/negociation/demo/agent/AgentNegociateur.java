@@ -38,27 +38,37 @@ public class AgentNegociateur extends Agent {
 
         // while condition d'arr
         while (!exit) {
-            if (!Messagerie.getMessages(this.getId()).isEmpty()) {
+            if (Messagerie.haveMessages(getId())) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
-                Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
+                Message message_recu = Messagerie.getLastMessage(getId());
                 MyLogger.logInfo(message_recu.toString());
-                if(message_recu.getTypeMessage() == TypeMessage.ACK) {
-                	stopAgent();
-                	MyLogger.logWarning("Négociateur (Agent n°" + getId() + ")  terminé");
-                	
-                	// Négociation réussi
-                	if(message_recu.getProposition() != null) {
-                		MyLogger.logInfo("[RESULTAT] Négociation réussi : " + message_recu.getProposition());
-                	}
-                	return;
+                // Arret des discussions
+                if (message_recu.getTypeMessage() == TypeMessage.ACK) {
+                    stopAgent();
+                    MyLogger.logWarning("Négociateur (Agent n°" + getId() + ")  terminé");
+
+                    // Négociation réussie
+                    if (message_recu.getProposition() != null) {
+                        MyLogger.logInfo("[RESULTAT] Négociation réussi : " + message_recu.getProposition());
+                    }
+                    return;
                 }
-                Proposition nouvelleProposition = this.strategieNegociateur.reflexion(message_recu.getProposition(), Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), isNegTimeUp);
-                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent();
-                else {
+                Proposition nouvelleProposition = this.strategieNegociateur.reflexion(message_recu.getProposition(),
+                        Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()),
+                        Messagerie.getAncienneProposition(this.getId(), message_recu.getEmetteur().getId()), isNegTimeUp);
+                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) {
+                    Messagerie.addMessage(new Message(TypeMessage.ACK, message_recu.getEmetteur(), this, nouvelleProposition));
+                    if(nouvelleProposition == null) {
+                        MyLogger.logWarning("Refus de la part du négociateur de la somme suivante :" + message_recu.getProposition().getMontant_prop() + ", la transaction était finie : " + isNegTimeUp(temps_dep_neg));
+                    }
+                    stopAgent();
+                } else {
                     Messagerie.addMessage(new Message(TypeMessage.CONTRE_PROPOSITION, message_recu.getEmetteur(), this, nouvelleProposition));
                 }
+               message_recu.setTraite(true);
             }
         }
+        MyLogger.logWarning("Négociateur (Agent n°" + getId() + ")  terminé");
     }
 
     public void stopAgent() {
@@ -66,6 +76,6 @@ public class AgentNegociateur extends Agent {
     }
 
     private boolean isNegTimeUp(long temps_dep_neg) {
-        return (TimeUnit.MILLISECONDS.toMinutes(temps_dep_neg - System.currentTimeMillis()) > 3);
+        return (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - temps_dep_neg) > 10);
     }
 }

@@ -19,14 +19,8 @@ public class FileLogger implements Logger {
     private static java.util.logging.Logger getInstance(){
         logger = java.util.logging.Logger.getLogger("file.log");
         FileHandler fh;
-        
+
         logger.setUseParentHandlers(false);
-        Handler[] handlers = logger.getHandlers();
-        for(Handler handler : handlers)
-        {
-                if(handler.getClass() == FileHandler.class)
-                    logger.removeHandler(handler);
-        }
         
         try{
             // This block configure the logger with handler and formatter

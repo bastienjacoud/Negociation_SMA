@@ -1,29 +1,17 @@
 package com.sma.negociation.demo.logger;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 public class ConsoleLogger implements Logger {
     private static java.util.logging.Logger logger = getInstance();
 
     private static java.util.logging.Logger getInstance(){
-        logger = java.util.logging.Logger.getLogger("console.log");
-        ConsoleHandler ch;
+        logger = java.util.logging.Logger.getLogger("console");
         logger.setUseParentHandlers(false);
-        
-        Handler[] handlers = logger.getHandlers();
-        for(Handler handler : handlers)
-        {
-                if(handler.getClass() == ConsoleHandler.class)
-                    logger.removeHandler(handler);
-        }
-        // This block configure the logger with handler and formatter
-        ch = new ConsoleHandler();
-        ch.setFormatter(new SimpleFormatter());
-        logger.addHandler(ch);
-        
+
+        StreamHandler sh = new StreamHandler(System.out, new SimpleFormatter());
+        logger.addHandler(sh);
+
         return logger;
     }
 

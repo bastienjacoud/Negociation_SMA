@@ -29,15 +29,29 @@ public class AgentFournisseur extends Agent {
         // while condition d'arr
         while (!exit) {
 
-            if (!Messagerie.getMessages(this.getId()).isEmpty()) {
+            if (Messagerie.haveMessages(getId())) {
                 boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
-                Message message_recu = Messagerie.getMessages(this.getId()).get(Messagerie.getMessages(this.getId()).size() - 1);
+                Message message_recu = Messagerie.getLastMessage(getId());
                 MyLogger.logInfo(message_recu.toString());
-                Proposition nouvelleProposition = this.strategieFournisseur.reflexion(message_recu.getProposition(), Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), isNegTimeUp);
-                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent(message_recu.getEmetteur(), message_recu.getProposition());
+                // Arret des discussions
+                if(message_recu.getTypeMessage() == TypeMessage.ACK) {
+                	
+                	// Négociation réussie
+                	if(message_recu.getProposition() != null) {
+                		MyLogger.logInfo("[RESULTAT] Négociation réussi, confirmation du fournisseur : " + message_recu.getProposition());
+                	} else {
+                		MyLogger.logWarning("[RESULTAT] Refus du négociateur, arrêt de l'échange");
+                	}
+                	return;
+                }
+                Proposition nouvelleProposition = this.strategieFournisseur.reflexion(message_recu.getProposition(), 
+                		Messagerie.getAncienneProposition(message_recu.getEmetteur().getId(), this.getId()), 
+                		Messagerie.getAncienneProposition(this.getId(), message_recu.getEmetteur().getId()), isNegTimeUp);
+                if (nouvelleProposition == null || nouvelleProposition.equals(message_recu.getProposition())) stopAgent(message_recu.getEmetteur(), nouvelleProposition);
                 else {
                     Messagerie.addMessage(new Message(TypeMessage.CONTRE_PROPOSITION, message_recu.getEmetteur(), this, nouvelleProposition));
                 }
+                message_recu.setTraite(true);
             }
         }
     }
@@ -48,6 +62,6 @@ public class AgentFournisseur extends Agent {
     }
 
     private boolean isNegTimeUp(long temps_dep_neg) {
-        return (TimeUnit.MILLISECONDS.toMinutes(temps_dep_neg - System.currentTimeMillis()) > 3);
+        return (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - temps_dep_neg) > 10);
     }
 }

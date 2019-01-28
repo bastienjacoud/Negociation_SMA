@@ -18,9 +18,18 @@ public class Messagerie {
      * @return Liste de messages de l'agent.
      */
     public static synchronized List<Message> getMessages(int idAgent){
-        return messages.stream()
+        return getMessages().stream()
                 .filter(m->(m.getRecepteur().getId() == idAgent && !m.isTraite()))
                 .collect(Collectors.toList());
+    }
+
+    public static synchronized Message getLastMessage(int idAgent) {
+        List<Message> messagesAgent = getMessages(idAgent);
+        return messagesAgent.get(messagesAgent.size() - 1);
+    }
+
+    public static synchronized boolean haveMessages(int idAgent) {
+        return !getMessages(idAgent).isEmpty();
     }
 
     /**
@@ -47,5 +56,9 @@ public class Messagerie {
         if(messages.size() >= 2) {
             return messages.get(messages.size() - 2).getProposition();
         }return null;
+    }
+
+    private synchronized static List<Message> getMessages() {
+        return messages;
     }
 }

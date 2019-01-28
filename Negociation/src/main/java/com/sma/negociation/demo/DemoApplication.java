@@ -18,8 +18,8 @@ public class DemoApplication {
     	MyLogger.logInfo("Démarrage");
         switch(modeInteraction) {
         case SIMPLE:       	
-        	Preference prefNego = new Preference(800.0, null, null, null, 500.0);
-        	Preference prefFour = new Preference(1000.0, null, null, null, 1200.0);
+        	Preference prefNego = new Preference(6000, null, null, null, 2000);
+        	Preference prefFour = new Preference(4000, null, null, null, 10000);
         	
         	AgentFournisseur fournisseur = new AgentFournisseur(prefFour, new StrategieNaiveFour());
         	AgentNegociateur negociateur = new AgentNegociateur(prefNego, new StrategieNaiveNego());

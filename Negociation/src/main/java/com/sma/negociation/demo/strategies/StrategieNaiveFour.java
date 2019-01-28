@@ -7,29 +7,38 @@ public class StrategieNaiveFour extends StrategieFournisseur {
 
 	@Override
 	protected Proposition contreProposition(Proposition propositionPartieAdverse, 
-			Proposition anciennePropositionAdverse) {
+			Proposition anciennePropositionAdverse, Proposition ancienneProposition) {
+		double ancienneValeur = (ancienneProposition == null ? preferenceAgent.getPrixDepNeg() : ancienneProposition.getMontant_prop());
 		
 		if(anciennePropositionAdverse == null) {
-			double moyenne = (propositionPartieAdverse.getMontant_prop() + preferenceAgent.getPrixDepNeg()) / 2;
+			double moyenne = (preferenceAgent.getBudget() + preferenceAgent.getPrixDepNeg()) / 2;
 			return new Proposition(moyenne + super.alea.nextDouble() * (preferenceAgent.getPrixDepNeg() - moyenne));
 		}
-		// Si l'augmentation du fournisseur est faible
-		if((propositionPartieAdverse.getMontant_prop() * anciennePropositionAdverse.getMontant_prop())/propositionPartieAdverse.getMontant_prop() > TAUXMAXDIMINUTION) {
-			return propositionPartieAdverse;
+		// Si la diminution du négociateur est faible
+		if(anciennePropositionAdverse.getMontant_prop() / propositionPartieAdverse.getMontant_prop() < TAUXMAXDIMINUTION) {
+			double ecart = ancienneValeur - propositionPartieAdverse.getMontant_prop();
+			double variableDiminution = ecart / 2 + super.alea.nextDouble() * (ancienneValeur - (ecart/2));
+			double res = ancienneValeur - variableDiminution;
+
+			// Garde-fous
+			if(res < preferenceAgent.getBudget())
+			    res = preferenceAgent.getBudget();
+			
+			return new Proposition(res);
 		}
-		return new Proposition(preferenceAgent.getPrixDepNeg());
+		return new Proposition(ancienneValeur);
 	}
 
 	@Override
 	protected boolean accepter(Proposition propositionPartieAdverse, 
-			Proposition anciennePropositionAdverse, boolean estTermine) {
+			Proposition anciennePropositionAdverse, Proposition ancienneProposition, boolean estTermine) {
 		
-		return propositionPartieAdverse.getMontant_prop() >= this.preferenceAgent.getPrixDepNeg();
+		return propositionPartieAdverse.getMontant_prop() >= this.preferenceAgent.getBudget();
 	}
 
 	@Override
 	protected boolean refuser(Proposition propositionPartieAdverse, 
-			Proposition anciennePropositionAdverse, boolean estTermine) {
+			Proposition anciennePropositionAdverse, Proposition ancienneProposition, boolean estTermine) {
 		return propositionPartieAdverse.getMontant_prop() < this.preferenceAgent.getBudget() / 2;
 	}
 
