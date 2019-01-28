@@ -36,7 +36,7 @@ public class Messagerie {
      * Ajouter un message
      * @param message
      */
-    public static void addMessage(Message message){
+    public static synchronized void addMessage(Message message){
         messages.add(message);
     }
 
@@ -48,7 +48,7 @@ public class Messagerie {
         messages.remove(message);
     }
 
-    public static Proposition getAncienneProposition(int id_emetteur, int id_recepteur){
+    public static synchronized  Proposition getAncienneProposition(int id_emetteur, int id_recepteur){
         List<Message> messages = Messagerie.getMessages(id_recepteur).
                 stream()
                 .filter(m -> m.getEmetteur().getId() == id_emetteur)
