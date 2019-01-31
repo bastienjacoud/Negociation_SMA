@@ -9,9 +9,8 @@ public class ConsoleLogger implements Logger {
         logger = java.util.logging.Logger.getLogger("console");
         logger.setUseParentHandlers(false);
 
-        StreamHandler sh = new StreamHandler(System.out, new SimpleFormatter());
+        StreamHandler sh = new StreamHandler(System.err, new SimpleFormatter());
         logger.addHandler(sh);
-
         return logger;
     }
 

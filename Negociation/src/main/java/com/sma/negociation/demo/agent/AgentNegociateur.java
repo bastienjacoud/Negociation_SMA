@@ -49,7 +49,7 @@ public class AgentNegociateur extends Agent {
 
                     // Négociation réussie
                     if (message_recu.getProposition() != null) {
-                        MyLogger.logInfo("[RESULTAT] Négociation réussi : " + message_recu.getProposition());
+                        MyLogger.logInfo("[RESULTAT | Agent négociateur " + getId() + "] Négociation réussi : " + message_recu.getProposition());
                     }
                     return;
                 }

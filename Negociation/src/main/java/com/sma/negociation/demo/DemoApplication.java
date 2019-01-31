@@ -19,13 +19,16 @@ public class DemoApplication {
         switch(modeInteraction) {
         case SIMPLE:       	
         	Preference prefNego = new Preference(6000, null, null, null, 2000);
+			Preference prefNego2 = new Preference(7000, null, null, null, 3500);
         	Preference prefFour = new Preference(4000, null, null, null, 10000);
         	
         	AgentFournisseur fournisseur = new AgentFournisseur(prefFour, new StrategieNaiveFour());
         	AgentNegociateur negociateur = new AgentNegociateur(prefNego, new StrategieNaiveNego());
+			AgentNegociateur negociateur2 = new AgentNegociateur(prefNego2, new StrategieNaiveNego());
         	
         	fournisseur.run();
         	negociateur.run();
+        	negociateur2.run();
         	break;
         case DEUX_NEGOCIATEURS:
         	break;
