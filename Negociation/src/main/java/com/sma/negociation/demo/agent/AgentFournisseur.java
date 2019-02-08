@@ -4,6 +4,7 @@ import com.sma.negociation.demo.logger.MyLogger;
 import com.sma.negociation.demo.messagerie.Message;
 import com.sma.negociation.demo.messagerie.Messagerie;
 import com.sma.negociation.demo.messagerie.TypeMessage;
+import com.sma.negociation.demo.regles.Regle;
 import com.sma.negociation.demo.strategies.StrategieFournisseur;
 
 import java.util.ArrayList;
@@ -30,8 +31,9 @@ public class AgentFournisseur extends Agent {
         while (!exit) {
 
             if (Messagerie.haveMessages(getId())) {
-                boolean isNegTimeUp = isNegTimeUp(temps_dep_neg);
+                boolean isNegTimeUp = isNegTimeUp(temps_dep_neg); // Contrôle du temps restant
                 Message message_recu = Messagerie.getLastMessage(getId());
+                isNegTimeUp = isNegTimeUp || Messagerie.getMessages(this.getId()).size() > Regle.getNbPropositionMax(); // Controle du nombre de propositions
                 MyLogger.logInfo(message_recu.toString());
                 // Arret des discussions
                 if(message_recu.getTypeMessage() == TypeMessage.ACK) {
@@ -62,6 +64,6 @@ public class AgentFournisseur extends Agent {
     }
 
     private boolean isNegTimeUp(long temps_dep_neg) {
-        return (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - temps_dep_neg) > 10);
+        return (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - temps_dep_neg) > Regle.getTempsNegociation());
     }
 }

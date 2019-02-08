@@ -8,9 +8,9 @@ public class Regle {
      *
      */
 
-    private static long tempsNegociation = 500;
+    private static long tempsNegociation = 10; // En secondes
     private static RegleProtocole regleProtocole = new NoRules();
-    private static int nbPropositionMax = 5;
+    private static int nbPropositionMax = 10;
 
     /**
      *
